@@ -92,7 +92,6 @@ public class block1{
 
 		int[] a = [1, 5, 9];
 		System.out.println(sumOfCubes(a));
-
 		//System.out.println(operation(24, 15, 9));	
 				
 		//double a = in.nextDouble();
