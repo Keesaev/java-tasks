@@ -88,13 +88,27 @@ public class block1{
 	}
 
     public static void main(String []args) {
-		Scanner in = new Scanner(System.in);
 
-		int[] a = [1, 5, 9];
-		System.out.println(sumOfCubes(a));
-
-		//System.out.println(operation(24, 15, 9));	
-				
-		//double a = in.nextDouble();
+    					// 1
+    	System.out.println("1.1: " + remainder(-9, 45));
+    					// 2
+    	System.out.println("1.2: " + triArea(10, 10));
+    					// 3
+    	System.out.println("1.3: " + animals(5, 2, 8));
+    					// 4
+    	System.out.println("1.4: " + profitableGamble(0.2, 50, 9));
+    					// 5
+    	System.out.println("1.5: " + operation(24, 15, 9));
+    					// 6
+    	System.out.println("1.6: " + ctoa('A'));
+    					// 7
+    	System.out.println("1.7: " + addUpTo(10));
+    					// 8
+    	System.out.println("1.8: " + nextEdge(8, 10));
+    					// 9
+		int[] a = {1, 5, 9};
+		System.out.println("1.9: " + sumOfCubes(a));
+						// 10
+		System.out.println("1.10: " + abcmath(5, 2, 1));
     }
 }
