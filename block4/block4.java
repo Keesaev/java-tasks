@@ -155,9 +155,23 @@ public class block4
 
 		String lastA = a.substring(a.lastIndexOf(" ") + 1, a.length() - 1);
 		String lastB = b.substring(b.lastIndexOf(" ") + 1, b.length() - 1);
-		System.out.println(lastA + ";" + lastB);
+		
+		String vowelsA, vowelsB;
+		vowelsA = vowelsB = "";
 
-		return true;
+		for(char i : lastA.toLowerCase().toCharArray()){
+			if ( i == 'a' || i == 'e' || i == 'o' || i == 'i' || i == 'u')
+				vowelsA = vowelsA.concat(Character.toString(i));
+		}
+
+		for(char i : lastB.toLowerCase().toCharArray()){
+			if ( i == 'a' || i == 'e' || i == 'o' || i == 'i' || i == 'u')
+				vowelsB = vowelsB.concat(Character.toString(i));
+		}
+
+		if(vowelsA.equals(vowelsB))
+			return true;
+		else return false;
 	}
 
 	public static void main(String[] args){
@@ -180,7 +194,7 @@ public class block4
 						// 7
 		System.out.println("4.7: " + toStarShorthand("77777geff"));
 						// 8
-		System.out.println("4.8: " + doesRhyme("Sam I am!", "Green eggs and ham."));
+		System.out.println("4.8: " + doesRhyme("Sam I am!", "Green eggs and HAM."));
 
 	}
 }
