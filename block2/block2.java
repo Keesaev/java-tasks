@@ -126,7 +126,14 @@ public class block2{
 
 				// 10
 
-	
+	public static int boxSeg(int a){
+		// value: 0 3 2 5 4 7 6 9 8...
+		// index: 0 1 2 3 4 5 6 7 8...
+		if(a % 2 == 0)
+			return a;
+		else
+			return a + 2;
+	}
 
 	public static void main(String []args){
 		
@@ -157,5 +164,7 @@ public class block2{
 				// 9
 		System.out.println("2.9.1: " + isPrefix("automation", "auto-"));
 		System.out.println("2.9.2: " + isSuffix("arachnophobia", "-phobia"));
+				// 10
+		System.out.println("2.10: " + boxSeg(7));
 	}
 }
