@@ -174,6 +174,49 @@ public class block4
 		else return false;
 	}
 
+						// 9
+
+	public static boolean trouble(Integer a, Integer b){
+		String a1 = Integer.toString(a);
+		String b1 = Integer.toString(b);
+
+		for(int i = 0; i <= 9; i++){
+			String aim = Integer.toString(i) + 
+				Integer.toString(i) + 
+				Integer.toString(i);
+			if(a1.indexOf(aim) != -1)
+				if(b1.indexOf(Integer.toString(i) + Integer.toString(i)) != -1)
+					return true;
+		}
+		return false;
+	}
+
+						// 10
+
+	public static int countUniqueBooks(String a, char b){
+		
+		Vector<Integer> vec = new Vector<>();
+
+		for(int i = 0; i < a.length(); i++){
+			if(a.charAt(i) == b)
+				vec.addElement(i);
+		}
+
+		int count = 0;
+
+		for(int i = 0; i < vec.size() - 1; i+=2){
+			String unique = "";
+			for(int j = vec.elementAt(i) + 1; j < vec.elementAt(i + 1); j++){
+				if(unique.indexOf(a.charAt(j)) == -1){
+					unique = unique.concat(Character.toString(a.charAt(j)));
+					count++;
+				}
+			}
+		}
+
+		return count;
+	}
+
 	public static void main(String[] args){
 						// 1
 		System.out.println("4.1: ");
@@ -195,6 +238,9 @@ public class block4
 		System.out.println("4.7: " + toStarShorthand("77777geff"));
 						// 8
 		System.out.println("4.8: " + doesRhyme("Sam I am!", "Green eggs and HAM."));
-
+						// 9
+		System.out.println("4.9: " + trouble(451222777, 411227));
+						// 10
+		System.out.println("4.10: " + countUniqueBooks("AZYWABBCATTTA", 'A'));
 	}
 }
