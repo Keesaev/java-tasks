@@ -53,21 +53,37 @@ public class block4
 						// 3
 
 	public static String toCamelCase(String s){
-		Vector<String> words = new Vector<>();
 		int left = 0;
+		String result = "";
+		
 		for(int i = 0; i < s.length(); i++){
 			if(s.charAt(i) == '_'){
-				String buffer = (char)((int)s.charAt(left) - 32) + s.substring(left + 1, i);
-				words.addElement(buffer);
-				left = i + 1;
+				result = result.concat(Character.toString(s.charAt(left)).toUpperCase() + s.substring(left + 1, i));
+				i++;
+				left = i;
 			}
 		}
-		words.addElement((char)((int)s.charAt(left) - 32) + s.substring(left + 1, s.length()));
-		for(String i : words){
-			System.out.println(i);
-		}
+		result = result.concat(Character.toString(s.charAt(s.lastIndexOf('_') + 1)).toUpperCase() + s.substring(s.lastIndexOf('_') + 2, s.length()));
+		result = Character.toString(s.charAt(0)).toLowerCase().concat(result.substring(1, result.length()));
 
-		return "";
+		return result;
+	}
+
+				/////////////// доделать
+
+
+	public static String toSnakeCase(String a){
+		String result = "";
+		int left = 0;
+		for(int i = 0; i < a.length(); i++){
+			if(Character.isUpperCase(a.charAt(i)) || i == a.length() - 1)
+			{
+				result = result.concat(a.substring(left, i) + "_" +  Character.toString(a.charAt(i)).toLowerCase());
+				i++;
+				left = i;
+			}
+		}
+		return result;
 	}
 
 						// 4
@@ -225,8 +241,8 @@ public class block4
 		System.out.print("4.2: ");
 		split("()()()");
 						// 3
-		System.out.println("4.3: ");
-		toCamelCase("is_modal_open");
+		System.out.println("4.3.1: " + toCamelCase("hi_how_is_it_going"));
+		System.out.println("4.3.2: " + toSnakeCase("hiHowIsItGoing"));
 						// 4
 		double[] arr1 = {13.25, 15, 30, 1.5};
 		System.out.println("4.4: $" + overTime(arr1));
