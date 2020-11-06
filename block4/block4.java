@@ -5,9 +5,10 @@ public class block4
 {
 						// 1
 
-	public static void textEditor(int n, int k, String s){
+	public static String textEditor(int n, int k, String s){
 		int lastId = 0;
 		Vector<String> words = new Vector<>();
+		// В этом цикле беребираем строку и вычленяем слова в вектор
 		for(int i = 0; i < n - 1; i++){
 			String buffer = s.substring(lastId, s.length());
 			lastId += buffer.indexOf(' ') + 1;
@@ -15,21 +16,22 @@ public class block4
 		}
 		words.addElement(s.substring(lastId, s.length()));
 
+		String result = "";
 		int currentLine = 0;
 		for(String i : words){
-			if(currentLine + i.length() > k){
-				System.out.println();
+			if(currentLine + i.length() > k){ // Место в строке кончилось
+				result = result.concat("\n");
 				currentLine = 0;
 			}
-			System.out.print(i + " ");
+			result = result.concat(i + " ");
 			currentLine += i.length();
 		}
-		System.out.println();
+		return result;
 	}
 
 						// 2
 
-	public static void split(String s){
+	public static String split(String s){
 		int openedBrackets = 0;
 		int left = 0;
 		Vector<String> vec = new Vector<>();
@@ -38,19 +40,24 @@ public class block4
 				openedBrackets++;
 			else if(s.charAt(i) == ')')
 				openedBrackets--;
-			if(openedBrackets == 0){
+			if(openedBrackets == 0){ // Число символов "(" и ")" равно, получаем кластер
 				vec.addElement(s.substring(left, i + 1));
 				left = i + 1;
 			}
 		}
 
-		System.out.print("[ ");
+		// Форматируем результат
+
+		String result = "[ ";
+
 		for(String i : vec)
-			System.out.print("\"" + i + "\", ");
-		System.out.println(" ]");
+			result = result.concat("\"" + i + "\", ");
+		result = result.substring(0, result.length() - 2);
+		result = result.concat(" ]");
+		return result;
 	}
 
-						// 3
+						// 3.1
 
 	public static String toCamelCase(String s){
 		int left = 0;
@@ -58,44 +65,49 @@ public class block4
 		
 		for(int i = 0; i < s.length(); i++){
 			if(s.charAt(i) == '_'){
+				// Находим символ "_", добавляем всё что было до него, послдний символ делаем заглавным
 				result = result.concat(Character.toString(s.charAt(left)).toUpperCase() + s.substring(left + 1, i));
 				i++;
 				left = i;
 			}
 		}
+		// Обрабатываем последний символ "_":
 		result = result.concat(Character.toString(s.charAt(s.lastIndexOf('_') + 1)).toUpperCase() + s.substring(s.lastIndexOf('_') + 2, s.length()));
-		result = Character.toString(s.charAt(0)).toLowerCase().concat(result.substring(1, result.length()));
+		// Не помню зачем это, но и без этого работает
+		//result = Character.toString(s.charAt(0)).toLowerCase().concat(result.substring(1, result.length()));
 
 		return result;
 	}
 
-				/////////////// доделать
-
+						// 3.2
 
 	public static String toSnakeCase(String a){
 		String result = "";
 		int left = 0;
 		for(int i = 0; i < a.length(); i++){
-			if(Character.isUpperCase(a.charAt(i)) || i == a.length() - 1)
+			if(Character.isUpperCase(a.charAt(i)))
 			{
+				// Находим заглавную - добавляем всё что было до неё, символ "_" и уменьшаем закглавную
 				result = result.concat(a.substring(left, i) + "_" +  Character.toString(a.charAt(i)).toLowerCase());
 				i++;
 				left = i;
 			}
 		}
+		// Добавляем оставшиеся символы
+		result = result.concat(a.substring(left, a.length()));
 		return result;
 	}
 
 						// 4
 
 	public static double overTime(double[] a){
-		double base = a[1] - a[0];
+		double base = a[1] - a[0];	// Обычные часы
 		if(a[1] > 17){
-			base -= a[1] - 17;
-			base = base * a[2] + (a[1] - 17) * a[2] * a[3]; 
+			base -= a[1] - 17;	// Вычитаем из обычных сверхурочные
+			base = base * a[2] + (a[1] - 17) * a[2] * a[3]; // Считаем
 		}
 		else
-			base *= a[2];
+			base *= a[2];	// Сверхурочных нет
 		return base;
 	}
 
@@ -103,17 +115,17 @@ public class block4
 
 	public static String BMI(String a, String b){
 		double weight, height;
-		if(a.indexOf("pounds") != -1){
+		if(a.indexOf("pounds") != -1){	// Переводим фунты
 			weight = Double.parseDouble(a.substring(0, a.indexOf("pounds")));
 			weight *= 0.453592;
 		}
-		else
+		else 	// Расчет в килограммах
 			weight = Double.parseDouble(a.substring(0, a.indexOf("kilos")));
-		if(b.indexOf("inches") != -1){
+		if(b.indexOf("inches") != -1){	// Переводим дюймы
 			height = Double.parseDouble(b.substring(0, b.indexOf("inches")));
 			height *= 0.0254;
 		}
-		else
+		else 	// Расчет в метрах
 			height = Double.parseDouble(b.substring(0, b.indexOf("meters")));
 
 		double bmi = weight / (height * height);
@@ -131,30 +143,35 @@ public class block4
 						// 6
 
 	public static int bugger(int a){
-		int i = 0;
-		for( ; a > 9; i++){
+		int result = 0;
+		for( ; a > 9; result++){
 			int b = a;
 			a = 1;
 			while(b > 1){
-				a *= b % 10;
-				b /= 10;
+				// "a" здесь это произведение каждой из цифр числа
+				a *= b % 10;		// Уммножаем на последнюю цифру
+				b /= 10;			// Убираем последнюю цифру
+				// По окончанию циклов while используем новую "а" в цикле for
 			}
 		}
-		return i;
+		return result;
 	}
 
 						// 7
 
 	public static String toStarShorthand(String a){
 		a = a.concat("!");
-		char lastChar = a.charAt(0);
-		int repeats = 0;
-		String retVal = "";
+
+		char lastChar = a.charAt(0);	// Крайний уникальный символ
+		int repeats = 0;				// Повторения символа
+		String retVal = "";				// Результат
+
 		for(int i = 0; i < a.length(); i++){
 			if(a.charAt(i) == lastChar)
 				repeats++;
 			else
 			{
+				// Вхождение нового символа
 				retVal = retVal.concat(Character.toString(lastChar));
 				if(repeats > 1)
 					retVal = retVal.concat("*" + Integer.toString(repeats));
@@ -197,6 +214,7 @@ public class block4
 		String b1 = Integer.toString(b);
 
 		for(int i = 0; i <= 9; i++){
+			// Проверяем все 9 сочетаний по три цифры
 			String aim = Integer.toString(i) + 
 				Integer.toString(i) + 
 				Integer.toString(i);
@@ -212,6 +230,7 @@ public class block4
 	public static int countUniqueBooks(String a, char b){
 		
 		Vector<Integer> vec = new Vector<>();
+		// Составляем вектор индексов символа "b" в строке "а"
 
 		for(int i = 0; i < a.length(); i++){
 			if(a.charAt(i) == b)
@@ -221,7 +240,9 @@ public class block4
 		int count = 0;
 
 		for(int i = 0; i < vec.size() - 1; i+=2){
+			// Проходим по вектору с шагом 2
 			String unique = "";
+			// Берем два индекса и ищем уникальные символы в этом интервале
 			for(int j = vec.elementAt(i) + 1; j < vec.elementAt(i + 1); j++){
 				if(unique.indexOf(a.charAt(j)) == -1){
 					unique = unique.concat(Character.toString(a.charAt(j)));
@@ -234,12 +255,13 @@ public class block4
 	}
 
 	public static void main(String[] args){
+		System.out.println("test: " + 3%10);
 						// 1
 		System.out.println("4.1: ");
-		textEditor(10, 7, "hello my name is Bessie and this is my essay");
+		System.out.println(textEditor(10, 7, "hello my name is Bessie and this is my essay"));
 						// 2
 		System.out.print("4.2: ");
-		split("()()()");
+		System.out.println(split("()()()"));
 						// 3
 		System.out.println("4.3.1: " + toCamelCase("hi_how_is_it_going"));
 		System.out.println("4.3.2: " + toSnakeCase("hiHowIsItGoing"));
@@ -249,7 +271,7 @@ public class block4
 						// 5
 		System.out.println("4.5: " + BMI("154 pounds", "2 meters"));
 						// 6
-		System.out.println("4.6: " + bugger(39));
+		System.out.println("4.6: " + bugger(999));
 						// 7
 		System.out.println("4.7: " + toStarShorthand("77777geff"));
 						// 8
